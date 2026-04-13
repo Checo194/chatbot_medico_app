@@ -1,0 +1,153 @@
+﻿@{
+    @using ChatBotDemo.Helpers
+
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["Title"] = "Chat";
+}
+
+<h2 style="color:#5A7D9A;margin-bottom:5px;">
+    👨‍⚕️ Asistente Médico Virtual
+</h2>
+
+<!-- 🔹 Header -->
+<div style="background:#A7D7F9;color:#2F4F4F;padding:12px;border-radius:10px;">
+    <b>@ViewBag.Nombre</b> - @ViewBag.CURP <br/>
+    <b>@ViewBag.Direccion</b>
+</div>
+
+<br />
+
+<!-- 🔹 Contenedor -->
+<div id="chat" style="
+    border:1px solid #D0E6F6;
+    height:320px;
+    overflow-y:auto;
+    padding:15px;
+    background:#F4F8FB;
+    border-radius:10px;
+">
+</div>
+
+<br />
+
+<!-- 🔹 Input -->
+<div style="display:flex;gap:10px;">
+    <input id="mensaje" style="
+        flex:1;
+        padding:10px;
+        border-radius:8px;
+        border:1px solid #BFDFF5;
+    " placeholder="Escribe un mensaje..." />
+
+    <button onclick="enviar()" style="
+        padding:10px 15px;
+        background:#7EC8E3;
+        color:white;
+        border:none;
+        border-radius:8px;
+        cursor:pointer;
+    ">
+        Enviar
+    </button>
+</div>
+
+<script>
+
+    // Mostrar mensaje de bienvenia al inicial elementFromPoint chat
+    window.onload = function() {
+        let chat = document.getElementById("chat");
+
+        chat.innerHTML += `
+            <div class="chat-bot">
+                <span>
+                    Hola 👋, soy tu asistente médico. ¿En qué puedo ayudarte?
+                </span>
+            </div>
+        `;
+    };
+
+    function enviar() {
+        let mensajeInput = document.getElementById("mensaje");
+        let mensaje = mensajeInput.value.trim();
+
+        if (mensaje === "") return;
+
+        let chat = document.getElementById("chat");
+
+        // Usuario
+        chat.innerHTML += `
+            <div style="text-align:right;margin:6px;">
+                <span style="
+                    background:#D6F0FF;
+                    padding:8px 12px;
+                    border-radius:12px;
+                    display:inline-block;
+                    color:#2F4F4F;
+                ">
+                    ${mensaje}
+                </span>
+            </div>
+        `;
+
+        mensajeInput.value = "";
+
+        // MOSTRAR "ESCRIBIENDO..."
+        chat.innerHTML += `
+            <div id="loading" style="text-align:left;margin:6px;">
+                <span style="
+                    background:white;
+                    padding:8px 12px;
+                    border-radius:12px;
+                    display:inline-block;
+                    border:1px solid #E0EEF7;
+                    color:#999;
+                    font-style:italic;
+                ">
+                    Escribiendo...
+                </span>
+            </div>
+        `;
+
+        chat.scrollTop = chat.scrollHeight;
+
+        fetch('/Home/EnviarMensaje', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'mensaje=' + encodeURIComponent(mensaje)
+        })
+        .then(r => r.json())
+        .then(respuesta => {
+
+            // QUITAR "ESCRIBIENDO..."
+            let loading = document.getElementById("loading");
+            if (loading) loading.remove();
+
+            // AGREGAR RESPUESTA REAL
+            chat.innerHTML += `
+                <div style="text-align:left;margin:6px;">
+                    <span style="
+                        background:white;
+                        padding:8px 12px;
+                        border-radius:12px;
+                        display:inline-block;
+                        border:1px solid #E0EEF7;
+                        color:#2F4F4F;
+                    ">
+                        ${respuesta}
+                    </span>
+                </div>
+            `;
+
+            chat.scrollTop = chat.scrollHeight;
+        });
+    }
+
+    // AQUÍ VA EL EVENTO DE ENTER
+    document.getElementById("mensaje")
+        .addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                enviar();
+            }
+        });
+</script>

@@ -1,0 +1,135 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+</head>
+
+<body style="margin:0;font-family:Arial;background:#F4F8FB;overflow:hidden;">
+
+    <div style="
+        background:#7EC8E3;
+        color:white;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        width:100%;
+        padding:8px 20px;
+        height:50px;
+        box-sizing:border-box;
+    ">
+
+        <!-- Lado izquierdo -->
+        <div style="display:flex;align-items:center;gap:10px;font-weight:bold;font-size:18px;">
+            <img src="~/images/logo2-2.png" style="width:28px;" />
+            ChatBot Médico
+        </div>
+
+        <!-- Lado derecho -->
+        <div style="display:flex; align-items:center; gap:15px;">
+
+            <span>
+                👤 @ViewBag.Email
+            </span>
+
+            <a href="/Home/CerrarSesion" style="
+                background:#E57373;
+                color:white;
+                padding:6px 12px;
+                border-radius:6px;
+                text-decoration:none;
+                font-size:12px;
+            ">
+                Cerrar sesión
+            </a>
+
+        </div>
+    </div>
+
+    <div style="display:flex;height:calc(100vh - 50px);">
+
+        <!-- 🔹 MENU IZQUIERDO -->
+        <div style="
+                width:240px;
+                background:#7EC8E3;
+                color:white;
+                padding:20px;
+        ">
+            
+            <a href="/Home/Bienvenida"
+               style="display:flex;align-items:center;gap:8px;color:white;margin:10px 0;text-decoration:none;">
+
+                <img src="~/images/icon/inicio.png" style="width:16px;height:16px;" />
+                Inicio
+            </a>
+
+            <!-- BUSQUEDA RAPIDA -->
+            <form method="post" action="/Home/BuscarPacienteMenu">
+                <input name="curp" 
+                       placeholder="Buscar por CURP"
+                       style="
+                            width:100%;
+                            padding:8px;
+                            border:none;
+                            border-radius:8px;
+                            margin-bottom:10px;
+                            " />
+
+                <button type="submit" 
+                        style="
+                            width:100%;
+                            padding:8px;
+                            background:#5FB3D4;
+                            color:white;
+                            border:none;
+                            border-radius:8px;
+                        ">
+                    Buscar
+                </button>
+
+                <p style="color:red;text-align:center;">@ViewBag.Error</p>
+            </form>
+
+            <!-- REGISRO DE PACIENTE -->
+            <a href="/Home/RegistroPaciente"
+               style="display:flex;align-items:center;gap:8px;color:white;margin:10px 0;text-decoration:none;">
+
+                <img src="~/images/icon/agregar.png" style="width:16px;height:16px;" />
+                Registro Paciente
+            </a>
+
+            <!-- CHAT SOLO CONSULTA -->
+            <a href="/Home/Chat"
+               style="display:flex;align-items:center;gap:8px;color:white;margin:10px 0;text-decoration:none;">
+
+                <img src="~/images/icon/chat.png" style="width:16px;height:16px;" />
+                Solo consulta
+            </a>
+        </div>
+
+        <!-- 🔹 CONTENIDO DERECHO -->
+        <div style="
+                flex:1;
+                padding:30px;
+                overflow-y:auto;
+        ">
+            <div style="
+                    background:white;
+                    padding:25px;
+                    border-radius:15px;
+                    box-shadow:0px 4px 10px rgba(0,0,0,0.1);
+            ">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+@* <h2 style="text-align:center;color:#5A7D9A;">Gestión de Pacientes</h2>
+
+<h4>Buscar Paciente</h4>
+<form method="post" action="/Home/BuscarPaciente">
+    <input name="curp" placeholder="CURP" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #BFDFF5;" />
+    <button type="submit" style="width:100%;padding:8px;background:#A7D7F9;border:none;border-radius:8px;">
+        Buscar
+    </button>
+</form>
+
+<br />
+
+<h4>Nuevo Paciene</h4>
+<form method="post" action="/Home/GuardarPaciente">
+    <input name="Nombre" placeholder="Nombre" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #BFDFF5;" />
+    <input name="CURP" placeholder="CURP" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #BFDFF5;" />
+    <input name="Direccion" placeholder="Direccion" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #BFDFF5;" />
+    <button type="submit" style="width:100%;padding:8px;background:#7EC8E3;color:white;border:none;border-radius:8px;">
+        Guardar
+    </button>
+</form>
+
+<br />
+
+<a href="/Home/Chat" style="display:block;text-align:center;color:#5A7D9A;">
+    Entrar como invitado
+</a>
+
+<p style="color:red;text-align:center;">@ViewBag.Error</p> *@
+
+@Html.ValidationSummary(true, "", new { style = "color:red;" })
+
+<h2 style="color:#5A7D9A;">Registro de Paciente</h2>
+
+<form method="post" action="/Home/GuardarPaciente">
+
+    <input name="Nombre" placeholder="Nombre"
+           style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #BFDFF5;" />
+    @Html.ValidationMessage("Nombre", "", new { style = "color:red;" })
+
+    <input name="CURP" placeholder="CURP"
+           style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #BFDFF5;" />
+    @Html.ValidationMessage("CURP", "", new { style = "color:red;" })
+
+    <input name="Direccion" placeholder="Dirección"
+           style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #BFDFF5;" />
+
+    <button type="submit" style="
+        width:100%;
+        padding:10px;
+        background:#7EC8E3;
+        color:white;
+        border:none;
+        border-radius:8px;
+    ">
+        Guardar
+    </button>
+
+</form>
+
+<br />
+
+<p style="color:red;">@TempData["Error"]</p>

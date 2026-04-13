@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h2 style="text-align:center;color:#5A7D9A;">Login</h2>
+
+<form method="post">
+    <input name="Email" placeholder="Correo" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #BFDFF5;" />
+
+    <input type="password" name="Password" placeholder="Contraseña" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #BFDFF5;" />
+
+    <button type="submit" style="width:100%;padding:10px;background:#7EC8E3;color:white;border:none;border-radius:8px;">
+        Entrar
+    </button>
+</form>
+
+<br />
+
+<a href="/Home/Registro" style="display:block;text-align:center;color:#5A7D9A;">
+    Crear cuenta
+</a>
+
+<p style="color:red;text-align:center;">@ViewBag.Error</p>
